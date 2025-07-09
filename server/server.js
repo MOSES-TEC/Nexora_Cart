@@ -20,7 +20,7 @@ await connectDB();
 await connectCloudinary();
 
 // Allow multiple origins
-const allowedOrigins = ['http://localhost:5174'];
+const allowedOrigins = ['http://localhost:5174', 'https://nexora-cart.vercel.app'];
 
 app.post('/stripe', express.raw({
     type: 'application/json'
