@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const Navbar = () => {
     const [open, setOpen] = React.useState(false);
-    const { user, setUser, setShowUserLogin, navigate, setSearchQuery, searchQuery, getCartCount, axios } = useAppContext();
+    const { user, setUser, setShowUserLogin, navigate, setSearchQuery, searchQuery, getCartCount, axios, setCartItems } = useAppContext();
 
     const logout = async () => {
         // setUser(null);
@@ -16,6 +16,7 @@ const Navbar = () => {
             if(data.success){
                 toast.success(data.message);
                 setUser(null);
+                setCartItems({});
                 navigate('/');
             } else {
                 toast.error(data.message);
@@ -88,7 +89,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         { open && (
-            <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}>
+            <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden z-50`}>
                 <NavLink to="/" onClick={()=> setOpen(false)}>Home</NavLink>
                 <NavLink to="/products" onClick={()=> setOpen(false)}>All Product</NavLink>
                 { user && 
