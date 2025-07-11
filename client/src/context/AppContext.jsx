@@ -45,33 +45,12 @@ export const AppContextProvider = ({children}) => {
             const {data} = await axios.get('/api/user/is-auth');
             if(data.success){
                 setUser(data.user);
-                // setCartItems(data.user.cartItems);
-                const restoredCart = {};
-                data.user.cart?.forEach(item => {
-                    if (item.productId && item.quantity > 0) {
-                    restoredCart[item.productId._id || item.productId] = item.quantity;
-                    }
-                });
-
-                setCartItems(restoredCart);
+                setCartItems(data.user.cartItems);
             }
         } catch (error) {
             setUser(null);
         }
     };
-
-
-    // restore cart without reload
-    const restoreCartFromUser = (userData) => {
-    const restoredCart = {};
-    userData.cart?.forEach(item => {
-        if (item.productId && item.quantity > 0) {
-        restoredCart[item.productId._id || item.productId] = item.quantity;
-        }
-    });
-    setCartItems(restoredCart);
-    };
-
 
 
     // Fetch All Products
@@ -178,8 +157,7 @@ export const AppContextProvider = ({children}) => {
 
     const value = {navigate, user, setUser, isSeller, setIsSeller, showUserLogin, setShowUserLogin, 
         products, currency, addToCart, updateCartItem, removeFromCart, cartItems,
-        searchQuery, setSearchQuery, getCartAmount, getCartCount, axios, 
-        fetchProducts, setCartItems, restoreCartFromUser};
+        searchQuery, setSearchQuery, getCartAmount, getCartCount, axios, fetchProducts, setCartItems};
 
     return <AppContext.Provider value={value}>
         {children}

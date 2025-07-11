@@ -62,7 +62,7 @@ export const login = async (req, res) => {
             return res.json({success: false, message: 'Invalid email or password'})
         }
 
-        await user.populate('cart.productId');
+        // await user.populate('cart.productId');
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
 
         res.cookie('token', token, {
@@ -72,7 +72,7 @@ export const login = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 *  1000, // Cookie expiration time
         });
 
-        return res.json({success: true, user: {email: user.email, name: user.name, cart: user.cart}});
+        return res.json({success: true, user: {email: user.email, name: user.name}});
 
     } catch (error) {
         console.log(error.message);
@@ -99,7 +99,7 @@ export const login = async (req, res) => {
 // userController.js
 export const isAuth = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select("-password").populate('cart.productId');
+        const user = await User.findById(req.user.id).select("-password");
         if (!user) {
             return res.json({ success: false, message: 'User not found' });
         }
