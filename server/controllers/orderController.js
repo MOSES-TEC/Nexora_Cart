@@ -30,6 +30,8 @@ export const placeOrderCOD = async (req, res) => {
             paymentType: "COD",
         });
 
+        //await User.findByIdAndUpdate(userId, { cartItems: {} }); 
+
         return res.json({ success: true, message: "Order Placed Successfully"});
 
     } catch (error) {
@@ -73,6 +75,8 @@ export const placeOrderStripe = async (req, res) => {
             address,
             paymentType: "Online",
         });
+
+        //await User.findByIdAndUpdate(userId, { cartItems: {} }); 
 
         // Stripe Gateway Initialize
         const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
